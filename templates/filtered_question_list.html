@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>筛选后的问题列表</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="question-list">
+            <div class="search-bar">
+                <form id="search-form" method="post" action="{{ url_for('question_list_search') }}">
+                    <input type="text" id="search-keyword" name="search_keyword" placeholder="请输入问题标题或内容关键字进行查询">
+                    <input type="submit" value="查询">
+                </form>
+            </div>
+            {% for question in questions %}
+            <div class="question-item">
+                <h3 class="question-title"><a href="{{ url_for('question_detail', question_id=question.id) }}">{{
+                        question.title }}</a></h3>
+                <p class="question-meta">提问者：{{ User.query.get(question.user_id).username }}</p>
+                <p class="question-meta">提问时间：{{ question.time }}</p>
+                <p class="question-meta">点赞数：{{ question.likes }}</p>
+                <p class="question-meta">评论数：{{ question.comments }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+</body>
+
+</html>

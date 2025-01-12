@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>筛选后的文章列表</title>
+    <!-- 引入CSS样式表 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+    <!-- 主要内容区域 -->
+    <div class="container">
+        <!-- 文章列表区域 -->
+        <div class="article-list">
+            <div class="search-bar">
+                <form id="search-form" method="post" action="{{ url_for('article_list_search') }}">
+                    <input type="text" id="search-keyword" name="search_keyword" placeholder="请输入文章标题或内容关键字进行查询">
+                    <input type="submit" value="查询">
+                </form>
+            </div>
+            {% for article in articles %}
+            <div class="article-item">
+                <h3 class="article-title"><a
+                        href="{{ url_for('article_detail', article_id=article.id) }}">{{article.title }}</a></h3>
+                <p class="article-meta">作者：{{ User.query.get(article.author_id).username }}</p>
+                <p class="article-meta">发布时间：{{ article.publish_time }}</p>
+                <p class="article-meta">点赞数：{{ article.likes }}</p>
+                <p class="article-meta">评论数：{{ article.comments }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>问题列表</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>医学知识科普与交流网站</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">首页</a></li>
+                {% if current_user.role == UserRole.ADMIN %}
+                <li><a href="{{ url_for('user_management') }}">用户管理</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('logout') }}">退出登录</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="category-sidebar">
+            <h3>分类</h3>
+            <ul class="category-list">
+                {% for category in categories %}
+                <li data-category-id="{{ category.id }}">{{ category.category_name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="question-list">
+            <div class="search-bar">
+                <form id="search-form" method="post" action="{{ url_for('question_list_search') }}">
+                    <input type="text" id="search-keyword" name="search_keyword" placeholder="请输入问题标题或内容关键字进行查询">
+                    <input type="submit" value="查询">
+                </form>
+            </div>
+            {% for question in questions %}
+            <div class="question-item">
+                <h3 class="question-title"><a href="{{ url_for('question_detail', question_id=question.id) }}">{{
+                        question.title }}</a></h3>
+                <p class="question-meta">提问者：{{ User.query.get(question.user_id).username }}</p>
+                <p class="question-meta">提问时间：{{ question.time }}</p>
+                <p class="question-meta">点赞数：{{ question.likes }}</p>
+                <p class="question-meta">评论数：{{ question.comments }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- 添加发布提问按钮 -->
+    <button class="btn-ask-question" id="new-question-btn">发布提问</button>
+
+    <script>
+        $(document).ready(function () {
+            $(".category-list li").click(function () {
+                var categoryId = $(this).data("category-id");
+                $.ajax({
+                    url: "/filter_questions_by_category",
+                    type: "POST",
+                    data: { category_id: categoryId },
+                    success: function (response) {
+                        $(".question-list").html(response);
+                    }
+                });
+            });
+
+            // 为发布提问按钮添加点击事件
+            $("#new-question-btn").click(function () {
+                window.location.href = "{{ url_for('new_question') }}";
+            });
+        });
+    </script>
+</body>
+
+</html>

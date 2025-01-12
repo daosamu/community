@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章列表</title>
+    <!-- 引入CSS样式表 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <!-- 头部导航栏 -->
+    <header>
+        <h1>医学知识科普与交流网站</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">首页</a></li>
+                {% if current_user.role == UserRole.ADMIN %}
+                <li><a href="{{ url_for('user_management') }}">用户管理</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('logout') }}">退出登录</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- 主要内容区域 -->
+    <div class="container">
+        <!-- 左侧分类栏 -->
+        <div class="category-sidebar">
+            <h3>分类</h3>
+            <ul class="category-list">
+                {% for category in categories %}
+                <li data-category-id="{{ category.id }}">{{ category.category_name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- 文章列表区域 -->
+        <div class="article-list">
+            <div class="search-bar">
+                <form id="search-form" method="post" action="{{ url_for('article_list_search') }}">
+                    <input type="text" id="search-keyword" name="search_keyword" placeholder="请输入文章标题或内容关键字进行查询">
+                    <input type="submit" value="查询">
+                </form>
+            </div>
+            {% for article in articles %}
+            <div class="article-item">
+                <h3 class="article-title"><a
+                        href="{{ url_for('article_detail', article_id=article.id) }}">{{article.title }}</a></h3>
+                <p class="article-meta">作者：{{ User.query.get(article.author_id).username }}</p>
+                <p class="article-meta">发布时间：{{ article.publish_time }}</p>
+                <p class="article-meta">点赞数：{{ article.likes }}</p>
+                <p class="article-meta">评论数：{{ article.comments }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- 添加发表文章按钮及权限判断显示 -->
+    {% if current_user.role == UserRole.DOCTOR or current_user.role == UserRole.ADMIN %}
+    <button class="btn-publish-article" id="new-article-btn">发表文章</button>
+    {% else %}
+    <p>你没有权限发表文章哦，该功能仅限医生及管理员使用。</p>
+    {% endif %}
+
+
+    <script>
+        $(document).ready(function () {
+            // 点击分类筛选文章
+            $(".category-list li").click(function () {
+                var categoryId = $(this).data("category-id");
+                $.ajax({
+                    url: "/filter_articles_by_category",
+                    type: "POST",
+                    data: { category_id: categoryId },
+                    success: function (response) {
+                        $(".article-list").html(response);
+                    }
+                });
+            });
+
+            // 为发表文章按钮添加点击事件
+            $("#new-article-btn").click(function () {
+                window.location.href = "{{ url_for('new_article') }}";
+            });
+        });
+    </script>
+</body>
+
+</html>

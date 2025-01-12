@@ -1,0 +1,419 @@
+/* 全局样式 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    font-size: 14px;
+    line-height: 1.6;
+    /* 微调行间距，让文字排版更舒适 */
+    color: #333;
+    /* 主体文字颜色为深灰色，提高可读性 */
+}
+
+/* 头部样式 */
+header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* 添加阴影效果，增强层次感 */
+}
+
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    /* 让导航项居中显示 */
+    align-items: center;
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    /* 适当增大导航文字字号 */
+    padding: 5px 10px;
+    /* 增加链接的内边距，提升点击区域大小 */
+    transition: all 0.3s ease;
+    /* 过渡效果应用到多个属性上，使交互更自然 */
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+    background-color: rgba(255, 255, 255, 0.1);
+    /* 鼠标悬停时添加淡白色背景，增加视觉反馈 */
+    border-radius: 3px;
+}
+
+/* 容器样式 */
+.container {
+    display: flex;
+    margin: 20px;
+    gap: 20px;
+    /* 使用 gap 属性来设置元素之间的间距，更简洁 */
+}
+
+/* 主体内容区域样式 */
+.main {
+    height: calc(100vh - 30px);
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+    margin: 20px;
+    overflow: auto;
+}
+
+/* 侧边栏样式 */
+.sidebar {
+    flex: 1;
+    background-color: #cce5ff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    font-size: 20px;
+    /* 增大侧边栏标题字号 */
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+    /* 标题底部添加稍粗的下划线，增强区分度 */
+    padding-bottom: 10px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+    /* 增大侧边栏链接文字字号 */
+    transition: all 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+    /* 悬停时加深的蓝色，视觉效果更明显 */
+}
+
+/* 主要内容区域样式 */
+.content {
+    flex: 1 1 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 文章通用样式 */
+.article {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.article h3 {
+    margin-top: 0;
+    font-size: 22px;
+    /* 进一步增大文章标题字号 */
+    font-weight: bold;
+    color: #007bff;
+    transition: all 0.3s ease;
+    /* 标题添加过渡效果 */
+}
+
+.article h3:hover {
+    color: #0056b3;
+    /* 标题悬停时颜色变化，增强交互性 */
+}
+
+/* 左侧分类栏样式 */
+.category-sidebar {
+    flex: 1;
+    background-color: #cce5ff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.category-sidebar h3 {
+    margin-top: 0;
+    color: #007bff;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    font-size: 20px;
+    /* 调整分类栏标题字号 */
+}
+
+.category-list {
+    list-style: none;
+    padding: 0;
+}
+
+.category-list li {
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+    padding: 8px;
+    /* 增加列表项内边距，提升点击感 */
+    border-radius: 3px;
+}
+
+.category-list li:hover {
+    background-color: #99d1ff;
+}
+
+.category-list li a {
+    color: #007bff;
+    text-decoration: none;
+    display: block;
+}
+
+.category-list li a:hover {
+    text-decoration: underline;
+}
+
+/* 文章列表样式 */
+.article-list {
+    flex: 3;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.article-item {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.article-title {
+    font-size: 20px;
+    /* 调整文章标题在列表中的字号 */
+    font-weight: bold;
+    margin-top: 0;
+    transition: all 0.3s ease;
+}
+
+.article-title a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.article-title a:hover {
+    color: #0056b3;
+}
+
+.article-meta {
+    color: #999;
+    font-size: 14px;
+}
+
+/* 问题列表样式 */
+.question-list {
+    flex: 3;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.question-item {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.question-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 0;
+    transition: all 0.3s ease;
+}
+
+.question-title a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.question-title a:hover {
+    color: #0056b3;
+}
+
+.question-meta {
+    color: #999;
+    font-size: 14px;
+}
+
+/* 发布提问按钮样式 */
+.btn-ask-question {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    /* 适当增大按钮尺寸 */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* 添加按钮阴影效果 */
+}
+
+.btn-ask-question:hover {
+    background-color: #0056b3;
+}
+
+/* 发表文章按钮样式 */
+.btn-publish-article {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-publish-article:hover {
+    background-color: #0056b3;
+}
+
+/* 表格样式 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 5px;
+    overflow: hidden;
+    /* 让表格圆角效果生效 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+table th,
+table td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    /* 适当增大表格单元格内边距 */
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+
+/* 筛选表单样式 */
+.filter-form {
+    margin-bottom: 15px;
+}
+
+/* 底部样式 */
+footer {
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    /* 适当增加底部栏的内边距 */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    /* 添加顶部阴影，使与上面内容区分更明显 */
+}
+
+/* 添加用户按钮样式 */
+.btn-add-user {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.btn-add-user:hover {
+    background-color: #0056b3;
+}
+
+/* 查找用户表单样式 */
+.find-user-form {
+    margin-bottom: 10px;
+}
+
+.find-user-form input[type="text"] {
+    padding: 8px;
+    /* 增大输入框内边距 */
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.find-user-form input[type="submit"] {
+    padding: 8px 16px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.find-user-form input[type="submit"]:hover {
+    background-color: #006d99;
+    /* 悬停时加深颜色 */
+}
+
+/* 搜索栏样式 */
+.search-bar {
+    margin: 10px 0;
+    padding: 12px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 响应式布局调整 */
+@media (max-width: 768px) {
+    .main {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .content {
+        width: 100%;
+        margin-bottom: 20px;
+        flex: 1;
+    }
+}

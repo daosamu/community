@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户详细信息</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>医学知识科普与交流网站</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">首页</a></li>
+                <li><a href="{{ url_for('user_management') }}">用户管理</a></li>
+                <li><a href="{{ url_for('logout') }}">退出登录</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h2>用户详细信息</h2>
+    {% if user %}
+    <table>
+        <thead>
+            <tr>
+                <th>用户名</th>
+                <th>邮箱</th>
+                <th>角色</th>
+                <th>其他信息</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role.value }}</td>
+                <td>
+                    姓名: {{ user.name }}<br>
+                    年龄: {{ user.age }}<br>
+                    性别: {{ user.gender }}<br>
+                    注册时间: {{ user.register_time }}<br>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    {% else %}
+    <p>未获取到用户详细信息</p>
+    {% endif %}
+    <a href="{{ url_for('user_management') }}">返回用户管理</a>
+</body>
+
+</html>

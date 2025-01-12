@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>问题详情</title>
+    <!-- 引入CSS样式文件 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>医学知识科普与交流网站</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">首页</a></li>
+                {% if current_user.role == UserRole.ADMIN %}
+                <li><a href="{{ url_for('user_management') }}">用户管理</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('logout') }}">退出登录</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="content">
+            <h2>问题详情</h2>
+            <article>
+                <h3>{{ question.title }}</h3>
+                <p>{{ question.content }}</p>
+                <p>提问者：{{ User.query.get(question.user_id).username }} | 提问时间：{{ question.time }}</p>
+                <div class="like-section">
+                    <button onclick="likeArticle('{{ question.id }}')">点赞（{{ question.likes }}）</button>
+                </div>
+            </article>
+
+            <!-- 评论部分 -->
+            <h3>评论</h3>
+            <ul>
+                {% for comment in comments %}
+                <li>
+                    <p>{{ comment.comment_user_id.name }}: {{ comment.comment_content }}</p>
+                    <p>评论时间: {{ comment.comment_time }}</p>
+                    {% if comment.parent_comment_id %}
+                    <p>回复: {{ comment.parent_comment_id }}</p>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+
+            <!-- 发表评论表单 -->
+            <h3>发表评论</h3>
+            <form method="post">
+                {{ form.csrf_token }}
+                <div class="form-group">
+                    {{ form.comment_content.label }}
+                    {{ form.comment_content }}
+                    {% for error in form.comment_content.errors %}
+                    <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <input type="hidden" name="question_id" value="{{ question.id }}">
+                <input type="hidden" name="parent_comment_id" value="{{ form.parent_comment_id.data }}">
+                <div class="form-group">
+                    {{ form.submit }}
+                </div>
+            </form>
+        </div>
+    </main>
+
+
+    <!-- 引入JavaScript文件 -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>

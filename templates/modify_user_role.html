@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修改用户角色</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        form {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        select,
+        input[type="submit"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>医学知识科普与交流网站</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">首页</a></li>
+                {% if current_user.role == UserRole.ADMIN %}
+                <li><a href="{{ url_for('user_management') }}">用户管理</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('logout') }}">退出登录</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h2>修改用户角色</h2>
+    <form action="{{ url_for('modify_user_role', user_id=user_id) }}" method="post">
+        <label for="new_role">选择新角色:</label>
+        <select name="new_role" id="new_role">
+            {% for role in UserRole %}
+            <option value="{{ role.value }}" {% if role.value==current_role %}selected{% endif %}>{{ role.value }}
+            </option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="确认修改">
+    </form>
+</body>
+
+</html>

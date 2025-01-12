@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>医学知识科普与交流网站</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>医学知识科普与交流网站</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">首页</a></li>
+                {% if current_user.role == UserRole.ADMIN %}
+                <li><a href="{{ url_for('user_management') }}">用户管理</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('logout') }}">退出登录</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="content">
+            <h2>科普文章区</h2>
+            {% for article in articles %}
+            <div class="article">
+                <h3><a href="{{ url_for('article_detail', article_id=article.id) }}">{{ article.title }}</a></h3>
+                <p>作者：{{ User.query.get(article.author_id).username }}</p>
+                <p>发布时间：{{ article.publish_time }}</p>
+            </div>
+            {% endfor %}
+            <a href="{{ url_for('article_list') }}">查看更多文章</a>
+        </div>
+
+        <div class="content">
+            <h2>提问区</h2>
+            {% for question in questions %}
+            <div class="article">
+                <h3><a href="{{ url_for('question_detail', question_id=question.id) }}">{{ question.title }}</a></h3>
+                <p>提问者：{{ User.query.get(question.user_id).username }}</p>
+                <p>提问时间：{{ question.time }}</p>
+            </div>
+            {% endfor %}
+            <a href="{{ url_for('question_list') }}">查看更多提问</a>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>版权所有 &copy; 医学知识科普与交流网站</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>

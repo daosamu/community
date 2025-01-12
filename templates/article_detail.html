@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章详情</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>医学知识科普与交流网站</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">首页</a></li>
+                {% if current_user.role == UserRole.ADMIN %}
+                <li><a href="{{ url_for('user_management') }}">用户管理</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('logout') }}">退出登录</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="content">
+            <h2>文章详情</h2>
+            <article>
+                <h3>{{ article.title }}</h3>
+                <p>{{ article.content }}</p>
+                <p>作者: {{ User.query.get(article.author_id).username }}, 发布时间: {{ article.publish_time }}</p>
+                <div class="like-section">
+                    <button onclick="likeArticle('{{ article.id }}')">点赞（{{ article.likes }}）</button>
+                </div>
+            </article>
+            <h3>评论</h3>
+            <ul>
+                {% for comment in comments %}
+                <li>
+                    <p>{{ comment.comment_user_id.name }}: {{ comment.comment_content }}</p>
+                    <p>评论时间: {{ comment.comment_time }}</p>
+                    {% if comment.parent_comment_id %}
+                    <p>回复: {{ comment.parent_comment_id }}</p>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            <h3>发表评论</h3>
+            <form method="post">
+                {{ form.csrf_token }}
+                <div class="form-group">
+                    {{ form.comment_content.label }}
+                    {{ form.comment_content }}
+                    {% for error in form.comment_content.errors %}
+                    <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <input type="hidden" name="article_id" value="{{ article.id }}">
+                <input type="hidden" name="parent_comment_id" value="{{ form.parent_comment_id.data }}">
+                <div class="form-group">
+                    {{ form.submit }}
+                </div>
+            </form>
+        </div>
+    </main>
+
+
+    <script>
+        function likeArticle(articleId) {
+            // 使用 fetch API 发送异步请求到后端的点赞路由
+            fetch('/like/' + articleId, {
+                method: 'POST'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // 如果点赞成功，更新页面上的点赞数
+                        document.querySelector('.like-section button').innerHTML = '点赞（' + data.likes + '）';
+                    } else {
+                        alert('点赞失败');
+                    }
+                })
+                .catch(error => {
+                    console.error('点赞请求出错:', error);
+                    alert('点赞请求出错，请稍后重试');
+                });
+        }
+    </script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>

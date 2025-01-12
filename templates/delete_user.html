@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>删除用户确认</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .message {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+        }
+
+        .button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 0 10px;
+        }
+
+        .confirm {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .cancel {
+            background-color: #ccc;
+            color: black;
+        }
+
+        .confirm:hover {
+            background-color: #0056b3;
+        }
+
+        .cancel:hover {
+            background-color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>医学知识科普与交流网站</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">首页</a></li>
+                {% if current_user.role == UserRole.ADMIN %}
+                <li><a href="{{ url_for('user_management') }}">用户管理</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('logout') }}">退出登录</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h2>删除用户确认</h2>
+    <p class="message">您确定要删除用户 "{{ user_username }}" 吗？此操作不可撤销。</p>
+    <div class="button-group">
+        <form action="{{ url_for('delete_user', user_id=user_id) }}" method="post">
+            <input type="submit" value="确认删除" class="button confirm">
+        </form>
+        <a href="{{ url_for('user_management') }}" class="button cancel">取消</a>
+    </div>
+</body>
+
+</html>
