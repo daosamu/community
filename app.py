@@ -121,7 +121,6 @@ def new_article():
         (category.id, category.category_name) for category in Category.query.all()
     ]
     if form.validate_on_submit():
-        tags = form.tags.data.split(",") if form.tags.data else []
         article = Article(
             title=form.title.data,
             content=form.content.data,
