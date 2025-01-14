@@ -42,9 +42,6 @@
                 <li>
                     <p>{{ comment.comment_user_id.name }}: {{ comment.comment_content }}</p>
                     <p>评论时间: {{ comment.comment_time }}</p>
-                    {% if comment.parent_comment_id %}
-                    <p>回复: {{ comment.parent_comment_id }}</p>
-                    {% endif %}
                 </li>
                 {% endfor %}
             </ul>
